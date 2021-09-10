@@ -6,6 +6,8 @@ import java.time.LocalDate;
 import javax.persistence.Column;
 import javax.persistence.Convert;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -14,6 +16,9 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import org.springframework.data.jpa.convert.threeten.Jsr310JpaConverters;
+
+import com.darlansantos.minhasfinancas.model.entity.enums.StatusLancamento;
+import com.darlansantos.minhasfinancas.model.entity.enums.TipoLancamento;
 
 import lombok.Data;
 
@@ -28,7 +33,7 @@ public class Lancamento {
 	private Long id;
 	
 	@Column(name = "descricao")
-	String descricao;
+	private String descricao;
 	
 	@Column(name = "ano")
 	private Integer ano;
@@ -46,5 +51,13 @@ public class Lancamento {
 	@ManyToOne
 	@JoinColumn(name = "id_usuario")
 	private Usuario usuario;
+	
+	@Column(name = "tipo")
+	@Enumerated(value = EnumType.STRING)
+	private TipoLancamento tipo;
+	
+	@Column(name = "status")
+	@Enumerated(value = EnumType.STRING)
+	private StatusLancamento status;
 
 }
