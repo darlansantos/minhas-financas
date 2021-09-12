@@ -1,25 +1,25 @@
 package com.darlansantos.minhasfinancas.model.entity.repository;
 
 import org.assertj.core.api.Assertions;
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
+import org.junit.Test;
+import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
-import org.springframework.test.context.junit.jupiter.SpringExtension;
+import org.springframework.test.context.junit4.SpringRunner;
 
 import com.darlansantos.minhasfinancas.model.entity.Usuario;
 
 @SpringBootTest
-@ExtendWith(SpringExtension.class)
+@RunWith(SpringRunner.class)
 @ActiveProfiles("test")
-class UsuarioRepositoryTest {
+public class UsuarioRepositoryTest {
 	
 	@Autowired
 	UsuarioRepository usuarioRepository;
 
 	@Test
-	void deveVerificarAExistenciaDeUmEmail() {	
+	public void deveVerificarAExistenciaDeUmEmail() {	
 		
 		//cenário
 		Usuario usuario = Usuario.builder().nome("usuario").email("usuario@gmail.com").build();
@@ -33,7 +33,7 @@ class UsuarioRepositoryTest {
 	}
 	
 	@Test
-	void deveRetornarFalsoQuandoNaoHouverUsuarioCadastradoComOEmail() {	
+	public void deveRetornarFalsoQuandoNaoHouverUsuarioCadastradoComOEmail() {	
 		
 		//cenário
 		usuarioRepository.deleteAll();
