@@ -33,7 +33,7 @@ public class UsuarioServiceTest {
 	}
 	
 	@Test(expected = RegraNegocioException.class)
-	public void develancarErroAoValidarEmailQuandoExistirEmailCadastrado() {
+	public void deveLancarErroAoValidarEmailQuandoExistirEmailCadastrado() {
 		
 		//cenário
 		Usuario usuario = Usuario.builder().nome("Usuario").email("email@email.com").build();
