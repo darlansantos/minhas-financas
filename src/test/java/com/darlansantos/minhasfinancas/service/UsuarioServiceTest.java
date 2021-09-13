@@ -4,6 +4,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mockito;
+import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
 
@@ -16,11 +17,12 @@ import com.darlansantos.minhasfinancas.service.impl.UsuarioServiceImpl;
 public class UsuarioServiceTest {
 
 	private UsuarioService usuarioService;
+	
+	@MockBean
 	private UsuarioRepository usuarioRepository;
 	
 	@Before
 	public void setUp() {
-		usuarioRepository = Mockito.mock(UsuarioRepository.class);
 		usuarioService = new UsuarioServiceImpl(usuarioRepository);
 	}
 
