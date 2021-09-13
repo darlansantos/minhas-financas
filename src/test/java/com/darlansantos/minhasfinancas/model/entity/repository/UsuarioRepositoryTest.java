@@ -1,5 +1,7 @@
 package com.darlansantos.minhasfinancas.model.entity.repository;
 
+import java.util.Optional;
+
 import org.assertj.core.api.Assertions;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -20,7 +22,7 @@ import com.darlansantos.minhasfinancas.model.entity.Usuario;
 public class UsuarioRepositoryTest {
 	
 	@Autowired
-	UsuarioRepository usuarioRepository;
+	private UsuarioRepository usuarioRepository;
 	
 	@Autowired
 	private TestEntityManager entityManager; 
@@ -28,27 +30,76 @@ public class UsuarioRepositoryTest {
 	@Test
 	public void deveVerificarAExistenciaDeUmEmail() {	
 		
-		//cenário
-		Usuario usuario = Usuario.builder().nome("usuario").email("usuario@gmail.com").build();
+		//cenário	
+		Usuario usuario = criarUsuario();
 		entityManager.persist(usuario);
 		
 		//ação - execução
-		boolean result = usuarioRepository.existsByEmail("usuario@gmail.com");
+		boolean result = usuarioRepository.existsByEmail("usuario@email.com");
 		
 		//verificação
 		Assertions.assertThat(result).isTrue();
 	}
 	
+
 	@Test
 	public void deveRetornarFalsoQuandoNaoHouverUsuarioCadastradoComOEmail() {	
 		
 		//cenário
 		
 		//ação - execução
-		boolean result = usuarioRepository.existsByEmail("usuario@gmail.com");
+		boolean result = usuarioRepository.existsByEmail("usuario@email.com");
 		
 		//verificação
 		Assertions.assertThat(result).isFalse();
+	}
+	
+	
+	@Test
+	public void devePersistirUmUsuarioNaBaseDeDados() {
+		
+		//cenario
+		Usuario usuario = criarUsuario();
+		
+		//acao
+		Usuario usuarioSalvo = usuarioRepository.save(usuario);
+		
+		//Verificacao
+		Assertions.assertThat(usuarioSalvo.getId()).isNotNull();
+	}
+	
+	@Test
+	public void deveBuscarUmUsuarioPorEmail() {
+		
+		//cenario
+		Usuario usuario = criarUsuario();
+		entityManager.persist(usuario);
+
+		//acao
+		Optional<Usuario> result = usuarioRepository.findByEmail("usuario@email.com");
+				
+		//verificacao
+		Assertions.assertThat(result.isPresent()).isTrue();
+	}
+	
+	@Test
+	public void deveRetornarVazioAoBuscarUsuarioPorEmailQuandoNaoExisteNaBase() {
+		
+		//cenario
+
+		//acao
+		Optional<Usuario> result = usuarioRepository.findByEmail("usuario@email.com");
+				
+		//verificacao
+		Assertions.assertThat(result.isPresent()).isFalse();
+	}
+	
+	private static Usuario criarUsuario() {
+		return  Usuario.builder()
+				.nome("usuario")
+				.email("usuario@email.com")
+				.senha("senha")
+				.build();	
 	}
 
 }
