@@ -79,7 +79,7 @@ public class UsuarioRepositoryTest {
 		Optional<Usuario> result = usuarioRepository.findByEmail("usuario@email.com");
 				
 		//verificacao
-		Assertions.assertThat(result.isPresent()).isTrue();
+		Assertions.assertThat(result.isPresent()).isTrue(); 
 	}
 	
 	@Test
@@ -97,7 +97,7 @@ public class UsuarioRepositoryTest {
 	private static Usuario criarUsuario() {
 		return  Usuario.builder()
 				.nome("usuario")
-				.email("usuario@email.com")
+				.email("usuario@email.com") 
 				.senha("senha")
 				.build();	
 	}

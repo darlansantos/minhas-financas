@@ -4,7 +4,7 @@ import com.darlansantos.minhasfinancas.model.entity.Usuario;
 
 public interface UsuarioService {
 	
-	Usuario autenticat(String email, String senha);
+	Usuario autenticar(String email, String senha);
 	
 	Usuario salvarUsuario(Usuario usuario);
 	

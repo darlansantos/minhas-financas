@@ -11,6 +11,7 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import com.darlansantos.minhasfinancas.exception.ErroAutenticacao;
 import com.darlansantos.minhasfinancas.exception.RegraNegocioException;
 import com.darlansantos.minhasfinancas.model.entity.Usuario;
 import com.darlansantos.minhasfinancas.model.entity.repository.UsuarioRepository;
@@ -40,10 +41,33 @@ public class UsuarioServiceTest {
 		Mockito.when(usuarioRepository.findByEmail(email)).thenReturn(Optional.of(usuario));
 		
 		//acao
-		Usuario result = usuarioService.autenticat(email, senha);
+		Usuario result = usuarioService.autenticar(email, senha);
 		
 		//verificacao
 		Assertions.assertThat(result).isNotNull();
+	}
+	
+	@Test(expected = ErroAutenticacao.class)
+	public void deveLancarErroQuandoNaoEncontrarUsuarioCadastradoComOEmailInformado() {
+		
+		//cenario
+		Mockito.when(usuarioRepository.findByEmail(Mockito.anyString())).thenReturn(Optional.empty());
+		
+		//acao
+		usuarioService.autenticar("email@email.com", "senha");
+	}
+	
+	@Test(expected = ErroAutenticacao.class)
+	public void deveLancarErroQuandoSenhaNaoBater() {
+		
+		//cenario
+		String email = "email@email.com";
+		String senha = "senha";
+		Usuario usuario = Usuario.builder().email(email).senha(senha).build();
+		Mockito.when(usuarioRepository.findByEmail(Mockito.anyString())).thenReturn(Optional.of(usuario));
+		
+		//acao
+		usuarioService.autenticar(email, "123");
 	}
 
 	@Test(expected = Test.None.class) //Não lança exceção
