@@ -3,11 +3,11 @@ package com.darlansantos.minhasfinancas.service;
 import java.util.Optional;
 
 import org.assertj.core.api.Assertions;
-import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mockito;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.boot.test.mock.mockito.SpyBean;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
 
@@ -21,14 +21,29 @@ import com.darlansantos.minhasfinancas.service.impl.UsuarioServiceImpl;
 @ActiveProfiles("test")
 public class UsuarioServiceTest {
 
-	private UsuarioService usuarioService;
+	@SpyBean
+	private UsuarioServiceImpl usuarioService;
 	
 	@MockBean
 	private UsuarioRepository usuarioRepository;
-	
-	@Before
-	public void setUp() {
-		usuarioService = new UsuarioServiceImpl(usuarioRepository);
+		
+	@Test(expected = Test.None.class)
+	public void deveSalvarUmUsuario() {
+		
+		//cenario
+		Mockito.doNothing().when(usuarioService).validarEmail(Mockito.anyString());
+		Usuario usuario = Usuario.builder().id(1L).nome("nome").email("email@email.com").senha("senha").build();
+		Mockito.when(usuarioRepository.save(Mockito.any(Usuario.class))).thenReturn(usuario);
+		
+		//acao
+		Usuario usuarioSalvo = usuarioService.salvarUsuario(new Usuario());
+		
+		//verificacao
+		Assertions.assertThat(usuarioSalvo).isNotNull();
+		Assertions.assertThat(usuarioSalvo.getId()).isEqualTo(1L);
+		Assertions.assertThat(usuarioSalvo.getNome()).isEqualTo("nome");
+		Assertions.assertThat(usuarioSalvo.getEmail()).isEqualTo("email@email.com");		
+		Assertions.assertThat(usuarioSalvo.getSenha()).isEqualTo("senha");
 	}
 	
 	@Test(expected = Test.None.class)
