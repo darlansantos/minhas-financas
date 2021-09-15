@@ -1,6 +1,7 @@
 package com.darlansantos.minhasfinancas.service;
 
 import java.util.List;
+import java.util.Optional;
 
 import com.darlansantos.minhasfinancas.model.entity.Lancamento;
 import com.darlansantos.minhasfinancas.model.entity.enums.StatusLancamento;
@@ -18,5 +19,7 @@ public interface LancamentoService {
 	void atualizarStatus(Lancamento lancamento, StatusLancamento status);
 	
 	void validar(Lancamento lancamento);
+	
+	Optional<Lancamento> obterPorId(Long id);
 
 }
