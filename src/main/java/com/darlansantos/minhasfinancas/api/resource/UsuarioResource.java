@@ -12,16 +12,15 @@ import com.darlansantos.minhasfinancas.exception.ErroAutenticacao;
 import com.darlansantos.minhasfinancas.model.entity.Usuario;
 import com.darlansantos.minhasfinancas.service.UsuarioService;
 
+import lombok.RequiredArgsConstructor;
+
 @RestController
+@RequiredArgsConstructor
 @RequestMapping(value = "/api/usuarios")
 public class UsuarioResource {
 		
-	private UsuarioService usuarioService;
-	
-	public UsuarioResource(UsuarioService usuarioService) {
-		this.usuarioService = usuarioService;
-	}
-	
+	private final UsuarioService usuarioService;
+
 	@PostMapping("/autenticar")
 	public ResponseEntity<?> autenticar(@RequestBody UsuarioDTO dto) {
 		try {

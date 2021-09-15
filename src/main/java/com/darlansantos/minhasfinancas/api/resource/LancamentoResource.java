@@ -23,17 +23,15 @@ import com.darlansantos.minhasfinancas.model.entity.enums.TipoLancamento;
 import com.darlansantos.minhasfinancas.service.LancamentoService;
 import com.darlansantos.minhasfinancas.service.UsuarioService;
 
+import lombok.RequiredArgsConstructor;
+
 @RestController
+@RequiredArgsConstructor
 @RequestMapping(value = "/api/lancamentos")
 public class LancamentoResource {
 
-	private LancamentoService lancamentoService;
-	private UsuarioService usuarioService;
-
-	public LancamentoResource(LancamentoService lancamentoService, UsuarioService usuarioService) {
-		this.lancamentoService = lancamentoService;
-		this.usuarioService = usuarioService;
-	}
+	private final LancamentoService lancamentoService;
+	private final UsuarioService usuarioService;
 	
 	public ResponseEntity<?> buscar(		
 			@RequestParam(value = "descricao", required = false) String descricao,
