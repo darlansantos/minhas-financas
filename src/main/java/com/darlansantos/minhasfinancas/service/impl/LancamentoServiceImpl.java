@@ -3,6 +3,9 @@ package com.darlansantos.minhasfinancas.service.impl;
 import java.util.List;
 import java.util.Objects;
 
+import org.springframework.data.domain.Example;
+import org.springframework.data.domain.ExampleMatcher;
+import org.springframework.data.domain.ExampleMatcher.StringMatcher;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -41,8 +44,13 @@ public class LancamentoServiceImpl implements LancamentoService {
 	}
 
 	@Override
+	@Transactional(readOnly =  true)
 	public List<Lancamento> buscar(Lancamento lancamentoFiltro) {
-		return null;
+		Example<Lancamento> example = Example.of(lancamentoFiltro, 
+				ExampleMatcher.matching()
+					.withIgnoreCase()
+					.withStringMatcher(StringMatcher.CONTAINING));
+		return lancamentoRepository.findAll(example);
 	}
 
 	@Override
