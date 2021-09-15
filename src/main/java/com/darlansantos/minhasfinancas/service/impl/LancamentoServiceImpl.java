@@ -3,6 +3,7 @@ package com.darlansantos.minhasfinancas.service.impl;
 import java.util.List;
 
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.darlansantos.minhasfinancas.model.entity.Lancamento;
 import com.darlansantos.minhasfinancas.model.entity.enums.StatusLancamento;
@@ -19,8 +20,9 @@ public class LancamentoServiceImpl implements LancamentoService {
 	}
 
 	@Override
+	@Transactional
 	public Lancamento salvar(Lancamento lancamento) {
-		return null;
+		return lancamentoRepository.save(lancamento);
 	}
 
 	@Override
