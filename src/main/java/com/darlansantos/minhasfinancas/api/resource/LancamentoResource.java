@@ -1,5 +1,6 @@
 package com.darlansantos.minhasfinancas.api.resource;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.http.HttpStatus;
@@ -10,6 +11,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.darlansantos.minhasfinancas.api.dto.LancamentoDTO;
@@ -26,12 +28,33 @@ import com.darlansantos.minhasfinancas.service.UsuarioService;
 public class LancamentoResource {
 
 	private LancamentoService lancamentoService;
-	
 	private UsuarioService usuarioService;
 
 	public LancamentoResource(LancamentoService lancamentoService, UsuarioService usuarioService) {
 		this.lancamentoService = lancamentoService;
 		this.usuarioService = usuarioService;
+	}
+	
+	public ResponseEntity<?> buscar(		
+			@RequestParam(value = "descricao", required = false) String descricao,
+			@RequestParam(value = "mes", required = false) Integer mes,
+			@RequestParam(value = "ano", required = false) Integer ano,
+			@RequestParam(value = "usuario") Long idUsuario) {
+		
+		Lancamento lancamentoFiltro = new Lancamento();
+		lancamentoFiltro.setDescricao(descricao);
+		lancamentoFiltro.setMes(mes);
+		lancamentoFiltro.setAno(ano);
+		
+		Optional<Usuario> usuario = usuarioService.obterPorId(idUsuario);
+		if (usuario.isPresent()) {
+			return ResponseEntity.badRequest().body("Não foi possível realizar a consulta. Usuário não encontrado para o Id informado");
+		} else {
+			lancamentoFiltro.setUsuario(usuario.get());
+		}
+		
+		List<Lancamento> lancamentos = lancamentoService.buscar(lancamentoFiltro);
+		return ResponseEntity.ok(lancamentos);
 	}
 	
 	@PostMapping
