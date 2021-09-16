@@ -1,4 +1,4 @@
-package com.darlansantos.minhasfinancas.model.entity.enums;
+package com.darlansantos.minhasfinancas.model.enums;
 
 public enum StatusLancamento {
 	

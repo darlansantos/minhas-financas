@@ -8,7 +8,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.darlansantos.minhasfinancas.exception.ErroAutenticacao;
 import com.darlansantos.minhasfinancas.exception.RegraNegocioException;
 import com.darlansantos.minhasfinancas.model.entity.Usuario;
-import com.darlansantos.minhasfinancas.model.entity.repository.UsuarioRepository;
+import com.darlansantos.minhasfinancas.model.repository.UsuarioRepository;
 import com.darlansantos.minhasfinancas.service.UsuarioService;
 
 @Service

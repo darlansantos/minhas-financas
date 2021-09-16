@@ -14,7 +14,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 import com.darlansantos.minhasfinancas.exception.ErroAutenticacao;
 import com.darlansantos.minhasfinancas.exception.RegraNegocioException;
 import com.darlansantos.minhasfinancas.model.entity.Usuario;
-import com.darlansantos.minhasfinancas.model.entity.repository.UsuarioRepository;
+import com.darlansantos.minhasfinancas.model.repository.UsuarioRepository;
 import com.darlansantos.minhasfinancas.service.impl.UsuarioServiceImpl;
 
 @RunWith(SpringRunner.class)

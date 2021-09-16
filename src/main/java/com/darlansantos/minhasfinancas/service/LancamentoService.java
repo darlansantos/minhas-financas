@@ -4,7 +4,7 @@ import java.util.List;
 import java.util.Optional;
 
 import com.darlansantos.minhasfinancas.model.entity.Lancamento;
-import com.darlansantos.minhasfinancas.model.entity.enums.StatusLancamento;
+import com.darlansantos.minhasfinancas.model.enums.StatusLancamento;
 
 public interface LancamentoService {
 	

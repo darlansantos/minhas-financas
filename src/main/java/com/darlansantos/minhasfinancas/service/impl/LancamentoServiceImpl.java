@@ -13,8 +13,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.darlansantos.minhasfinancas.exception.RegraNegocioException;
 import com.darlansantos.minhasfinancas.model.entity.Lancamento;
-import com.darlansantos.minhasfinancas.model.entity.enums.StatusLancamento;
-import com.darlansantos.minhasfinancas.model.entity.repository.LancamentoRepository;
+import com.darlansantos.minhasfinancas.model.enums.StatusLancamento;
+import com.darlansantos.minhasfinancas.model.repository.LancamentoRepository;
 import com.darlansantos.minhasfinancas.service.LancamentoService;
 
 @Service

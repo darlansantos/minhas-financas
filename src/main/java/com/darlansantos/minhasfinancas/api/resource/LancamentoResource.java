@@ -18,8 +18,8 @@ import com.darlansantos.minhasfinancas.api.dto.LancamentoDTO;
 import com.darlansantos.minhasfinancas.exception.RegraNegocioException;
 import com.darlansantos.minhasfinancas.model.entity.Lancamento;
 import com.darlansantos.minhasfinancas.model.entity.Usuario;
-import com.darlansantos.minhasfinancas.model.entity.enums.StatusLancamento;
-import com.darlansantos.minhasfinancas.model.entity.enums.TipoLancamento;
+import com.darlansantos.minhasfinancas.model.enums.StatusLancamento;
+import com.darlansantos.minhasfinancas.model.enums.TipoLancamento;
 import com.darlansantos.minhasfinancas.service.LancamentoService;
 import com.darlansantos.minhasfinancas.service.UsuarioService;
 

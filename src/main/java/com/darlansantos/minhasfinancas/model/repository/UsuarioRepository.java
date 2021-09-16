@@ -1,4 +1,4 @@
-package com.darlansantos.minhasfinancas.model.entity.repository;
+package com.darlansantos.minhasfinancas.model.repository;
 
 import java.util.Optional;
 
