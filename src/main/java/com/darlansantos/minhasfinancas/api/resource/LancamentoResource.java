@@ -93,19 +93,27 @@ public class LancamentoResource {
 	}
 
 	private Lancamento converter(LancamentoDTO dto) {
+		
+		Lancamento lancamento = new Lancamento();
+		lancamento.setId(dto.getId());
+		lancamento.setDescricao(dto.getDescricao());
+		lancamento.setAno(dto.getAno());
+		lancamento.setMes(dto.getMes());
+		lancamento.setValor(dto.getValor());
+		
 		Usuario usuario = usuarioService
-				.obterPorId(dto.getUsuario())
+				.obterPorId(dto.getUsuario()) 
 				.orElseThrow(() -> new RegraNegocioException("Usuário não encontrado para o Id informado."));
 		
-		Lancamento lancamento = Lancamento.builder()
-				.descricao(dto.getDescricao())
-				.ano(dto.getAno())
-				.mes(dto.getMes())
-				.valor(dto.getValor())
-				.tipo(TipoLancamento.valueOf(dto.getTipo()))
-				.status(StatusLancamento.valueOf(dto.getStatus()))
-				.usuario(usuario)
-				.build();
+		lancamento.setUsuario(usuario);
+		
+		if (dto.getTipo() != null) {
+			lancamento.setTipo(TipoLancamento.valueOf(dto.getTipo()));
+		}
+		
+		if (dto.getStatus() != null) {
+			lancamento.setStatus(StatusLancamento.valueOf(dto.getStatus()));
+		}
 		
 		return lancamento;	
 	}
