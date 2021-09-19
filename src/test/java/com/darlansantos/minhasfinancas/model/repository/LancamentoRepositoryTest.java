@@ -56,7 +56,7 @@ public class LancamentoRepositoryTest {
 	public void deveAtualizarUmLancamento() {
 		Lancamento lancamento = criarEPersistirUmLancamento();
 		
-		lancamento.setAno(2021);
+		lancamento.setAno(2020);
 		lancamento.setDescricao("Teste Atualizar");
 		lancamento.setStatus(StatusLancamento.CANCELADO);
 		
@@ -64,7 +64,7 @@ public class LancamentoRepositoryTest {
 		
 		Lancamento lancamentoAtualizado = entityManager.find(Lancamento.class, lancamento.getId());
 		
-		assertThat(lancamentoAtualizado.getAno()).isEqualTo(2021);
+		assertThat(lancamentoAtualizado.getAno()).isEqualTo(2020);
 		assertThat(lancamentoAtualizado.getDescricao()).isEqualTo("Teste Atualizar");
 		assertThat(lancamentoAtualizado.getStatus()).isEqualTo(StatusLancamento.CANCELADO);
 	}
@@ -84,7 +84,7 @@ public class LancamentoRepositoryTest {
 		return lancamento;
 	}
 
-	private Lancamento criarLancamento(	) {
+	public static Lancamento criarLancamento() {
 		Lancamento lancamento = Lancamento.builder()
 								  	.ano(2021)
 								  	.mes(9)
