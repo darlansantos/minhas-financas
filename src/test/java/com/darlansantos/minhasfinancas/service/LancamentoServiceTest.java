@@ -19,8 +19,7 @@ import com.darlansantos.minhasfinancas.service.impl.LancamentoServiceImpl;
 @RunWith(SpringRunner.class)
 @ActiveProfiles("test")
 public class LancamentoServiceTest {
-	
-	
+		
 	@SpyBean
 	private LancamentoServiceImpl lancamentoService;
 	
@@ -58,4 +57,35 @@ public class LancamentoServiceTest {
 		catchThrowableOfType(() -> lancamentoService.salvar(lancamentoASalvar), RegraNegocioException.class);
 		Mockito.verify(lancamentoRepository, Mockito.never()).save(lancamentoASalvar);
 	}
+	
+	@Test
+	public void deveAtualizarUmLancamento() {
+		
+		// Cenario	
+		Lancamento lancamentoSalvo = LancamentoRepositoryTest.criarLancamento();
+		lancamentoSalvo.setId(1L);
+		lancamentoSalvo.setStatus(StatusLancamento.PENDENTE);
+		
+		Mockito.doNothing().when(lancamentoService).validar(lancamentoSalvo);
+		
+		Mockito.when(lancamentoRepository.save(lancamentoSalvo)).thenReturn(lancamentoSalvo);
+		
+		// Execucao
+		lancamentoService.atualizar(lancamentoSalvo);
+		
+		// Verificacao
+		Mockito.verify(lancamentoRepository, Mockito.times(1)).save(lancamentoSalvo);
+	}
+	
+	@Test
+	public void deveLancarErroAoTentarAtualizarUmLancamentoQueAindaNaoFoiSalvo() {
+		
+		// Cenario
+		Lancamento lancamentoASalvar = LancamentoRepositoryTest.criarLancamento();
+		
+		// Execucao e Verificacao
+		catchThrowableOfType(() -> lancamentoService.atualizar(lancamentoASalvar), NullPointerException.class);
+		Mockito.verify(lancamentoRepository, Mockito.never()).save(lancamentoASalvar);
+	}
+	
 }
