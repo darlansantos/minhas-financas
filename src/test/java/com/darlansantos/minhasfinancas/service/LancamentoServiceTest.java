@@ -22,6 +22,7 @@ import com.darlansantos.minhasfinancas.exception.RegraNegocioException;
 import com.darlansantos.minhasfinancas.model.entity.Lancamento;
 import com.darlansantos.minhasfinancas.model.entity.Usuario;
 import com.darlansantos.minhasfinancas.model.enums.StatusLancamento;
+import com.darlansantos.minhasfinancas.model.enums.TipoLancamento;
 import com.darlansantos.minhasfinancas.model.repository.LancamentoRepository;
 import com.darlansantos.minhasfinancas.model.repository.LancamentoRepositoryTest;
 import com.darlansantos.minhasfinancas.service.impl.LancamentoServiceImpl;
@@ -254,6 +255,25 @@ public class LancamentoServiceTest {
 		
 		erro = catchThrowable(() -> lancamentoService.validar(lancamento));
 		assertThat(erro).isInstanceOf(RegraNegocioException.class).hasMessage("Informe um tipo de lançamento.");
+	}
+	
+	@Test
+	public void deveObterSaldoPorUsuario() {
+		
+		// Cenario
+		Long idUsuario = 1L;
+		
+		Mockito.when(lancamentoRepository.obterSaldoPorTipoLancamentoEUsuario(idUsuario, TipoLancamento.RECEITA))
+			   .thenReturn(BigDecimal.valueOf(100));
+		
+		Mockito.when(lancamentoRepository.obterSaldoPorTipoLancamentoEUsuario(idUsuario, TipoLancamento.DESPESA))
+		   .thenReturn(BigDecimal.valueOf(40));
+		
+		// Execucao
+		BigDecimal saldo = lancamentoService.obterSaldoPorUsuario(idUsuario);
+		
+		// Verificacao
+		assertThat(saldo).isEqualTo(BigDecimal.valueOf(60));
 	}
 	
 }
