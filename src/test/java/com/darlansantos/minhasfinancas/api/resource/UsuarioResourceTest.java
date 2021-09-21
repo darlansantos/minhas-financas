@@ -1,5 +1,8 @@
 package com.darlansantos.minhasfinancas.api.resource;
 
+import java.math.BigDecimal;
+import java.util.Optional;
+
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mockito;
@@ -142,6 +145,28 @@ public class UsuarioResourceTest {
 		mvc
 			.perform(request)
 			.andExpect(MockMvcResultMatchers.status().isBadRequest())
+		;	
+	}
+	
+	@Test
+	public void deveObterOSaldoDoUsuario() throws Exception {
+		
+		// Cenario
+		BigDecimal saldo = BigDecimal.valueOf(10);		
+		Usuario usuario = Usuario.builder().id(1L).email("usuario@email.com").senha("123").build();	
+		Mockito.when(usuarioService.obterPorId(1L)).thenReturn(Optional.of(usuario));
+		Mockito.when(lancamentoService.obterSaldoPorUsuario(1L)).thenReturn(saldo);
+		
+		// Execucao e Verificacao
+		MockHttpServletRequestBuilder request = MockMvcRequestBuilders
+													.get(API.concat("/1/saldo"))
+													.accept(JSON)
+													.contentType(JSON);
+		
+		mvc
+			.perform(request)
+			.andExpect(MockMvcResultMatchers.status().isOk())
+			.andExpect(MockMvcResultMatchers.content().string("10"))
 		;	
 	}
 
