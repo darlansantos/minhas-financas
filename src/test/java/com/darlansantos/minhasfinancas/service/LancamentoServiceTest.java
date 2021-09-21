@@ -121,6 +121,7 @@ public class LancamentoServiceTest {
 		Mockito.verify(lancamentoRepository, Mockito.never()).delete(lancamento);
 	}
 	
+	@SuppressWarnings("unchecked")
 	@Test
 	public void deveFiltrarLancamentos() {
 		
@@ -135,8 +136,26 @@ public class LancamentoServiceTest {
 		List<Lancamento> resultado = lancamentoService.buscar(lancamento);
 		
 		// Verificacoes
-		assertThat(resultado).isNotEmpty().hasSize(1).contains(lancamento);
-			
+		assertThat(resultado).isNotEmpty().hasSize(1).contains(lancamento);		
+	}
+	
+	@Test
+	public void deveAtualizarOStatusDeUmLancamento() {
+		
+		// Cenario
+		Lancamento lancamento = LancamentoRepositoryTest.criarLancamento();
+		lancamento.setId(1L);
+		lancamento.setStatus(StatusLancamento.PENDENTE);
+		
+		StatusLancamento novoStatus = StatusLancamento.EFETIVADO;
+		Mockito.doReturn(lancamento).when(lancamentoService).atualizar(lancamento);
+		
+		// Execucao
+		lancamentoService.atualizarStatus(lancamento, novoStatus);
+		
+		// Verificacoes
+		assertThat(lancamento.getStatus()).isEqualTo(novoStatus);
+		Mockito.verify(lancamentoService).atualizar(lancamento);
 	}
 	
 }
