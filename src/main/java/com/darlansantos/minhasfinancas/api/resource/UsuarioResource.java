@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.darlansantos.minhasfinancas.api.dto.UsuarioDTO;
 import com.darlansantos.minhasfinancas.exception.ErroAutenticacao;
+import com.darlansantos.minhasfinancas.exception.RegraNegocioException;
 import com.darlansantos.minhasfinancas.model.entity.Usuario;
 import com.darlansantos.minhasfinancas.service.LancamentoService;
 import com.darlansantos.minhasfinancas.service.UsuarioService;
@@ -45,7 +46,7 @@ public class UsuarioResource {
 		try {
 			Usuario usuarioSalvo = usuarioService.salvarUsuario(usuario);
 			return new ResponseEntity<>(usuarioSalvo, HttpStatus.CREATED);
-		} catch (Exception e) {
+		} catch (RegraNegocioException e) {
 			return ResponseEntity.badRequest().body(e.getMessage());
 		}
 		
