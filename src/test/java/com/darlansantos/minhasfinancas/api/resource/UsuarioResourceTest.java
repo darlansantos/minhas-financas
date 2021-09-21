@@ -169,5 +169,23 @@ public class UsuarioResourceTest {
 			.andExpect(MockMvcResultMatchers.content().string("10"))
 		;	
 	}
+	
+	@Test
+	public void deveRetornarResourceNotFoundQuandoUsuarioNaoExisteParaObterOSaldo() throws Exception {
+		
+		// Cenario
+		Mockito.when(usuarioService.obterPorId(1L)).thenReturn(Optional.empty());
+		
+		// Execucao e Verificacao
+		MockHttpServletRequestBuilder request = MockMvcRequestBuilders
+													.get(API.concat("/1/saldo"))
+													.accept(JSON)
+													.contentType(JSON);
+		
+		mvc
+			.perform(request)
+			.andExpect(MockMvcResultMatchers.status().isNotFound())
+		;		
+	}
 
 }
