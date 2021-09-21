@@ -5,6 +5,7 @@ import static org.assertj.core.api.Assertions.catchThrowableOfType;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -156,6 +157,42 @@ public class LancamentoServiceTest {
 		// Verificacoes
 		assertThat(lancamento.getStatus()).isEqualTo(novoStatus);
 		Mockito.verify(lancamentoService).atualizar(lancamento);
+	}
+	
+	@Test
+	public void deveObterUmLancamentoPorId() {
+		
+		// Cenario
+		Long id = 1L;
+		
+		Lancamento lancamento = LancamentoRepositoryTest.criarLancamento();
+		lancamento.setId(id);
+		
+		Mockito.when(lancamentoRepository.findById(id)).thenReturn(Optional.of(lancamento));
+		
+		// Execucao
+		Optional<Lancamento> resultado = lancamentoService.obterPorId(id);
+		
+		// Verificacao
+		assertThat(resultado.isPresent()).isTrue();		
+	}
+	
+	@Test
+	public void deveRetornarVazioQuandoOLancamentoNaoExiste() {
+		
+		// Cenario
+		Long id = 1L;
+		
+		Lancamento lancamento = LancamentoRepositoryTest.criarLancamento();
+		lancamento.setId(id);
+		
+		Mockito.when(lancamentoRepository.findById(id)).thenReturn(Optional.empty());
+		
+		// Execucao
+		Optional<Lancamento> resultado = lancamentoService.obterPorId(id);
+		
+		// Verificacao
+		assertThat(resultado.isPresent()).isFalse();		
 	}
 	
 }
